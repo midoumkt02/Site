@@ -14,44 +14,69 @@
   }
   body { font-family: var(--font-body); background: var(--white); color: var(--black); font-size: 15px; line-height: 1.6; }
   a { text-decoration: none; color: inherit; }
+
+  /* NAV */
   nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 64px; }
   .nav-logo { font-family: var(--font-display); font-size: 26px; font-weight: 600; letter-spacing: 0.15em; }
   .nav-links { display: flex; gap: 32px; }
-  .nav-links a { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-600); transition: color 0.2s; }
+  .nav-links a { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-600); transition: color 0.2s; cursor: pointer; }
   .nav-links a:hover, .nav-links a.active { color: var(--black); }
   .nav-cart { font-size: 13px; letter-spacing: 0.06em; display: flex; align-items: center; gap: 6px; cursor: pointer; }
   .cart-count { background: var(--black); color: var(--white); border-radius: 50%; width: 18px; height: 18px; font-size: 11px; display: flex; align-items: center; justify-content: center; }
-  .hero { background: var(--gray-100); padding: 80px 48px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; min-height: 420px; }
-  .hero-text h1 { font-family: var(--font-display); font-size: 64px; font-weight: 400; line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 20px; }
+
+  /* HERO */
+  .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 520px; }
+  .hero-text { background: var(--gray-100); padding: 80px 64px; display: flex; flex-direction: column; justify-content: center; }
+  .hero-text h1 { font-family: var(--font-display); font-size: 64px; font-weight: 400; line-height: 1.05; letter-spacing: -0.01em; margin-bottom: 20px; }
   .hero-text p { color: var(--gray-600); font-size: 15px; max-width: 340px; line-height: 1.8; }
-  .hero-cta { display: inline-block; margin-top: 28px; padding: 12px 28px; background: var(--black); color: var(--white); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; transition: background 0.2s; }
+  .hero-cta { display: inline-block; margin-top: 32px; padding: 13px 32px; background: var(--black); color: var(--white); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; transition: background 0.2s; align-self: flex-start; }
   .hero-cta:hover { background: var(--gray-600); }
-  .hero-image { height: 320px; background: var(--gray-200); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; color: var(--gray-400); letter-spacing: 0.1em; }
+  .hero-image { position: relative; overflow: hidden; }
+  .hero-image img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+
+  /* SECTION */
   .section-header { padding: 48px 48px 24px; display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--gray-200); }
   .section-header h2 { font-family: var(--font-display); font-size: 32px; font-weight: 400; }
   .section-header span { font-size: 13px; color: var(--gray-400); letter-spacing: 0.04em; }
   .catalogue { padding: 0 48px 48px; }
   .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 2px; }
+
+  /* PRODUCT CARD */
   .product-card { cursor: pointer; transition: opacity 0.2s; }
   .product-card:hover { opacity: 0.85; }
   .product-card.active { outline: 2px solid var(--black); outline-offset: -2px; }
-  .product-img { aspect-ratio: 3/4; background: var(--gray-100); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 16px; color: var(--gray-400); letter-spacing: 0.08em; position: relative; overflow: hidden; }
-  .product-img img { width: 100%; height: 100%; object-fit: cover; }
+  .product-img { aspect-ratio: 3/4; background: var(--gray-100); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 16px; color: var(--gray-400); position: relative; overflow: hidden; }
+  .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+  .product-card:hover .product-img img { transform: scale(1.03); }
   .product-badge { position: absolute; top: 12px; left: 12px; background: var(--black); color: var(--white); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 8px; z-index: 1; }
   .product-info { padding: 14px 0 8px; }
   .product-name { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
   .product-desc { font-size: 13px; color: var(--gray-600); margin-bottom: 8px; }
-  .product-price { font-family: var(--font-display); font-size: 18px; color: var(--black); }
+  .product-price { font-family: var(--font-display); font-size: 18px; }
   .product-price .old { color: var(--gray-400); text-decoration: line-through; margin-right: 8px; font-size: 15px; }
+
+  /* PRODUCT DETAIL */
   .product-detail { display: none; background: var(--gray-100); border-top: 1px solid var(--gray-200); padding: 48px; margin: 0 0 2px; }
   .product-detail.open { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
-  .detail-image { aspect-ratio: 3/4; max-height: 460px; background: var(--gray-200); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; color: var(--gray-400); overflow: hidden; }
-  .detail-image img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* GALLERY */
+  .gallery-wrap { display: flex; flex-direction: column; gap: 8px; }
+  .gallery-main { aspect-ratio: 3/4; max-height: 500px; background: var(--gray-200); overflow: hidden; position: relative; }
+  .gallery-main img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.25s; }
+  .gallery-thumbs { display: flex; gap: 6px; flex-wrap: wrap; }
+  .gallery-thumb { width: 68px; height: 88px; background: var(--gray-200); overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: border-color 0.15s; flex-shrink: 0; }
+  .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-thumb.active { border-color: var(--black); }
+  .gallery-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; color: var(--gray-400); }
+
+  /* DETAIL CONTENT */
   .detail-content h3 { font-family: var(--font-display); font-size: 36px; font-weight: 400; margin-bottom: 8px; }
-  .detail-content .price-block { margin: 16px 0 24px; }
-  .detail-content .price-main { font-family: var(--font-display); font-size: 28px; }
-  .detail-content .price-old { font-size: 16px; color: var(--gray-400); text-decoration: line-through; margin-right: 10px; }
+  .price-block { margin: 16px 0 24px; }
+  .price-main { font-family: var(--font-display); font-size: 28px; }
+  .price-old { font-size: 16px; color: var(--gray-400); text-decoration: line-through; margin-right: 10px; }
   .detail-desc { color: var(--gray-600); margin-bottom: 28px; line-height: 1.8; }
+
+  /* FORM */
   .order-form h4 { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--gray-200); }
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
   .form-group { display: flex; flex-direction: column; gap: 6px; }
@@ -74,24 +99,30 @@
   .success-msg.show { display: block; }
   .success-msg h5 { font-family: var(--font-display); font-size: 22px; font-weight: 400; margin-bottom: 6px; }
   .success-msg p { font-size: 13px; color: var(--gray-600); }
+
   .loading-grid { grid-column: 1/-1; text-align: center; padding: 60px 0; color: var(--gray-400); font-size: 14px; }
   .empty-catalogue { grid-column: 1/-1; text-align: center; padding: 80px 20px; color: var(--gray-400); }
   .empty-catalogue h3 { font-family: var(--font-display); font-size: 28px; font-weight: 400; margin-bottom: 8px; }
+
+  /* FOOTER */
   footer { border-top: 1px solid var(--gray-200); padding: 40px 48px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; background: var(--white); }
-  .footer-col h5 { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; color: var(--black); }
+  .footer-col h5 { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; }
   .footer-col p, .footer-col a { display: block; font-size: 13px; color: var(--gray-600); margin-bottom: 8px; transition: color 0.2s; }
   .footer-col a:hover { color: var(--black); }
   .footer-bottom { border-top: 1px solid var(--gray-200); padding: 20px 48px; font-size: 12px; color: var(--gray-400); display: flex; justify-content: space-between; align-items: center; }
+
   @media (max-width: 768px) {
     nav { padding: 0 20px; } .nav-links { display: none; }
-    .hero { grid-template-columns: 1fr; padding: 40px 20px; gap: 32px; }
-    .hero-text h1 { font-size: 42px; } .hero-image { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-image { height: 320px; }
+    .hero-text { padding: 48px 24px; }
+    .hero-text h1 { font-size: 44px; }
     .section-header { padding: 32px 20px 16px; } .catalogue { padding: 0 20px 32px; }
     .product-grid { grid-template-columns: 1fr 1fr; }
-    .product-detail.open { grid-template-columns: 1fr; gap: 24px; padding: 24px 20px; }
+    .product-detail.open { grid-template-columns: 1fr; gap: 28px; padding: 28px 20px; }
     .form-grid { grid-template-columns: 1fr; }
     footer { grid-template-columns: 1fr; padding: 32px 20px; }
-    .footer-bottom { padding: 16px 20px; flex-direction: column; gap: 8px; }
+    .footer-bottom { padding: 16px 20px; flex-direction: column; gap: 8px; text-align: center; }
   }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -102,10 +133,10 @@
 <nav>
   <div class="nav-logo">BLANC</div>
   <div class="nav-links">
-    <a href="#" class="active" onclick="showSection('all',event)">Tout</a>
-    <a href="#" onclick="showSection('femme',event)">Femme</a>
-    <a href="#" onclick="showSection('homme',event)">Homme</a>
-    <a href="#" onclick="showSection('accessoires',event)">Accessoires</a>
+    <a class="active" onclick="showSection('all',event)">Tout</a>
+    <a onclick="showSection('femme',event)">Femme</a>
+    <a onclick="showSection('homme',event)">Homme</a>
+    <a onclick="showSection('accessoires',event)">Accessoires</a>
   </div>
   <div class="nav-cart">
     <span>Panier</span>
@@ -113,15 +144,19 @@
   </div>
 </nav>
 
+<!-- HERO -->
 <div class="hero">
   <div class="hero-text">
     <h1>La mode<br>sans bruit</h1>
     <p>Des pièces intemporelles pensées pour durer. Matières nobles, coupes épurées, fabrication responsable.</p>
-    <a class="hero-cta" href="#catalogue" onclick="document.getElementById('catalogue').scrollIntoView({behavior:'smooth'})">Voir la collection</a>
+    <a class="hero-cta" onclick="document.getElementById('catalogue').scrollIntoView({behavior:'smooth'})">Voir la collection</a>
   </div>
-  <div class="hero-image">Nouvelle collection</div>
+  <div class="hero-image">
+    <img src="https://res.cloudinary.com/djikeohkg/image/upload/v1782746468/ddbe6d64623ccc6cb5e2c147a420a6dc_hc7rld.jpg" alt="Nouvelle collection">
+  </div>
 </div>
 
+<!-- CATALOGUE -->
 <div id="catalogue">
   <div class="section-header">
     <h2>Collection</h2>
@@ -133,6 +168,7 @@
   </div>
 </div>
 
+<!-- FOOTER -->
 <footer>
   <div class="footer-col">
     <h5>BLANC</h5>
@@ -168,10 +204,10 @@ const firebaseConfig = {
   appId: "1:279528112650:web:ff800b44f63adb72c195f3"
 };
 
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz0WTn952EGJd9wceHCmE1ZU1T1j4k8VZ357MGn1RapwDQ50-iQA75g0VftayPk-OlMnQ/exec";
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz0WTn952EGJd9wceHCmE1ZU1T1j4k8VZ357MGn1RapwDQ50-iQA75g0VftayPk-OlMnQ/exec";
 
 let allProducts = [];
 let currentFilter = 'all';
@@ -181,12 +217,19 @@ let cartTotal = 0;
 
 function formatPrice(p) { return p.toLocaleString('fr-DZ') + ' DA'; }
 
-// Écoute temps réel Firebase
+// Écoute temps réel
 const q = query(collection(db, "produits"), orderBy("createdAt", "desc"));
 onSnapshot(q, (snapshot) => {
   allProducts = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
   renderGrid(currentFilter);
 });
+
+function getImages(p) {
+  const imgs = [];
+  if (p.image) imgs.push(p.image);
+  if (p.images && Array.isArray(p.images)) imgs.push(...p.images);
+  return imgs;
+}
 
 function renderGrid(filter) {
   currentFilter = filter || 'all';
@@ -194,7 +237,6 @@ function renderGrid(filter) {
   const grid = document.getElementById('productGrid');
   const detail = document.getElementById('productDetail');
   detail.classList.remove('open'); detail.innerHTML = '';
-
   document.getElementById('productCount').textContent = filtered.length + ' pièce' + (filtered.length !== 1 ? 's' : '');
 
   if (filtered.length === 0) {
@@ -202,11 +244,14 @@ function renderGrid(filter) {
     return;
   }
 
-  grid.innerHTML = filtered.map(p => `
+  grid.innerHTML = filtered.map(p => {
+    const imgs = getImages(p);
+    const thumb = imgs[0] || null;
+    return `
     <div class="product-card" id="card-${p.id}" onclick="openDetail('${p.id}')">
       <div class="product-img">
         ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
-        ${p.image ? `<img src="${p.image}" alt="${p.name}">` : `<span>${p.name.split(' ').slice(0,2).join(' ')}</span>`}
+        ${thumb ? `<img src="${thumb}" alt="${p.name}">` : `<span>${p.name.split(' ').slice(0,2).join(' ')}</span>`}
       </div>
       <div class="product-info">
         <div class="product-name">${p.name}</div>
@@ -216,8 +261,8 @@ function renderGrid(filter) {
           ${formatPrice(p.price)}
         </div>
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
 window.openDetail = function(id) {
@@ -230,12 +275,31 @@ window.openDetail = function(id) {
   if (!quantities[id]) quantities[id] = 1;
   if (!selectedSizes[id]) selectedSizes[id] = '';
 
+  const imgs = getImages(p);
   const sizeBtns = p.sizes.map(s =>
     `<button class="size-btn${selectedSizes[id]===s?' selected':''}" onclick="selectSize('${id}','${s}')">${s}</button>`
   ).join('');
 
+  // Galerie
+  let galleryHTML = '';
+  if (imgs.length === 0) {
+    galleryHTML = `<div class="gallery-wrap"><div class="gallery-main"><div class="gallery-placeholder">${p.name}</div></div></div>`;
+  } else if (imgs.length === 1) {
+    galleryHTML = `<div class="gallery-wrap"><div class="gallery-main"><img id="mainImg-${id}" src="${imgs[0]}" alt="${p.name}"></div></div>`;
+  } else {
+    const thumbs = imgs.map((img, i) => `
+      <div class="gallery-thumb${i===0?' active':''}" onclick="switchImg('${id}', '${img}', this)">
+        <img src="${img}" alt="Photo ${i+1}">
+      </div>`).join('');
+    galleryHTML = `
+      <div class="gallery-wrap">
+        <div class="gallery-main"><img id="mainImg-${id}" src="${imgs[0]}" alt="${p.name}"></div>
+        <div class="gallery-thumbs">${thumbs}</div>
+      </div>`;
+  }
+
   detail.innerHTML = `
-    <div class="detail-image">${p.image ? `<img src="${p.image}" alt="${p.name}">` : p.name}</div>
+    ${galleryHTML}
     <div class="detail-content">
       <h3>${p.name}</h3>
       <p class="detail-desc">${p.desc}</p>
@@ -301,11 +365,16 @@ window.openDetail = function(id) {
   detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 };
 
+window.switchImg = function(id, url, thumb) {
+  const main = document.getElementById('mainImg-'+id);
+  if (main) { main.style.opacity = '0'; setTimeout(() => { main.src = url; main.style.opacity = '1'; }, 200); }
+  document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+  thumb.classList.add('active');
+};
+
 window.selectSize = function(id, size) {
   selectedSizes[id] = size;
-  document.querySelectorAll(`#sizes-${id} .size-btn`).forEach(b => {
-    b.classList.toggle('selected', b.textContent === size);
-  });
+  document.querySelectorAll(`#sizes-${id} .size-btn`).forEach(b => b.classList.toggle('selected', b.textContent === size));
 };
 
 window.changeQty = function(id, delta) {
@@ -321,13 +390,10 @@ window.submitOrder = async function(id) {
   const phone   = document.getElementById('phone-'+id).value.trim();
   const address = document.getElementById('address-'+id).value.trim();
   const wilaya  = document.getElementById('wilaya-'+id).value;
-
   if (!fname || !phone || !address || !wilaya) { alert('Merci de remplir tous les champs obligatoires.'); return; }
   if (!selectedSizes[id] && p.sizes.length > 1) { alert('Veuillez choisir une taille.'); return; }
-
   const btn = document.getElementById('submitBtn-'+id);
   btn.textContent = 'Envoi en cours…'; btn.disabled = true;
-
   const data = {
     produit: p.name, prenom: fname, nom: lname, telephone: phone,
     adresse: address, wilaya, taille: selectedSizes[id] || p.sizes[0],
@@ -335,7 +401,6 @@ window.submitOrder = async function(id) {
     quantite: quantities[id] || 1,
     notes: document.getElementById('notes-'+id)?.value || ''
   };
-
   try {
     await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) });
     cartTotal++;
@@ -352,6 +417,8 @@ window.showSection = function(cat, event) {
   if (event) event.preventDefault();
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
   if (event) event.target.classList.add('active');
+  const detail = document.getElementById('productDetail');
+  detail.classList.remove('open'); detail.innerHTML = '';
   renderGrid(cat);
 };
 </script>

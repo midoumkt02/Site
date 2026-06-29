@@ -21,18 +21,19 @@
   .login-box label { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-600); display: block; margin-bottom: 6px; }
   .login-box input { width: 100%; border: 1px solid var(--gray-200); padding: 11px 14px; font-size: 14px; font-family: var(--font-body); outline: none; transition: border-color 0.2s; margin-bottom: 20px; }
   .login-box input:focus { border-color: var(--black); }
-  .login-btn { width: 100%; background: var(--black); color: var(--white); border: none; padding: 13px; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: var(--font-body); transition: background 0.2s; }
-  .login-btn:hover { background: var(--gray-600); }
+  .login-btn { width: 100%; background: var(--black); color: var(--white); border: none; padding: 13px; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: var(--font-body); }
   .login-error { font-size: 13px; color: #c0392b; margin-top: 12px; display: none; }
 
   .admin-screen { display: none; }
   header { background: var(--white); border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 64px; position: sticky; top: 0; z-index: 10; }
   .header-logo { font-family: var(--font-display); font-size: 22px; font-weight: 600; letter-spacing: 0.15em; }
   .header-right { display: flex; align-items: center; gap: 20px; }
-  .header-right a { font-size: 13px; color: var(--gray-600); text-decoration: none; transition: color 0.2s; }
-  .header-right a:hover { color: var(--black); }
+  .header-right a { font-size: 13px; color: var(--gray-600); text-decoration: none; }
   .logout-btn { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--gray-200); background: var(--white); padding: 7px 16px; cursor: pointer; font-family: var(--font-body); transition: all 0.2s; }
   .logout-btn:hover { background: var(--black); color: var(--white); border-color: var(--black); }
+  .status-bar { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray-400); }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #ccc; }
+  .status-dot.green { background: #2ecc71; }
 
   .admin-body { max-width: 1100px; margin: 0 auto; padding: 40px 48px; display: grid; grid-template-columns: 1fr 1.4fr; gap: 32px; align-items: start; }
 
@@ -46,36 +47,32 @@
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .form-hint { font-size: 12px; color: var(--gray-400); margin-top: 5px; }
 
-  .img-upload-area {
-    width: 100%; aspect-ratio: 3/4; max-height: 260px;
-    background: var(--gray-100); border: 2px dashed var(--gray-200);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 10px; cursor: pointer; transition: border-color 0.2s;
-    overflow: hidden; position: relative; margin-bottom: 10px;
-  }
-  .img-upload-area:hover { border-color: var(--black); }
-  .img-upload-area img { width: 100%; height: 100%; object-fit: cover; display: none; position: absolute; top:0; left:0; }
-  .img-upload-area input[type="file"] { position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2; }
-  .upload-text { text-align: center; pointer-events: none; z-index: 1; }
-  .upload-text .icon { font-size: 32px; display: block; margin-bottom: 8px; }
-  .upload-text p { font-size: 13px; color: var(--gray-600); }
-  .upload-text small { font-size: 11px; color: var(--gray-400); }
+  /* MULTI PHOTO UPLOAD */
+  .photos-label { font-size: 12px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--gray-600); display: block; margin-bottom: 8px; }
+  .photos-hint { font-size: 12px; color: var(--gray-400); margin-bottom: 10px; }
+  .photos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; }
+  .photo-slot { aspect-ratio: 3/4; background: var(--gray-100); border: 2px dashed var(--gray-200); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; transition: border-color 0.2s; }
+  .photo-slot:hover { border-color: var(--black); }
+  .photo-slot img { width: 100%; height: 100%; object-fit: cover; display: none; position: absolute; }
+  .photo-slot input[type="file"] { position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2; }
+  .photo-slot .slot-text { font-size: 20px; pointer-events: none; }
+  .photo-slot .slot-label { font-size: 10px; color: var(--gray-400); margin-top: 4px; pointer-events: none; }
+  .photo-slot.has-image .slot-text, .photo-slot.has-image .slot-label { display: none; }
+  .photo-slot .remove-photo { display: none; position: absolute; top: 6px; right: 6px; background: var(--black); color: var(--white); border: none; width: 22px; height: 22px; border-radius: 50%; font-size: 13px; cursor: pointer; z-index: 3; align-items: center; justify-content: center; line-height: 1; }
+  .photo-slot.has-image .remove-photo { display: flex; }
 
-  .upload-bar-wrap { display: none; background: var(--gray-200); height: 4px; border-radius: 2px; margin-bottom: 8px; overflow: hidden; }
-  .upload-bar-wrap.show { display: block; }
-  .upload-bar { height: 100%; background: var(--black); width: 0%; transition: width 0.3s; }
+  .upload-progress-wrap { display: none; background: var(--gray-200); height: 3px; border-radius: 2px; margin-bottom: 8px; }
+  .upload-progress-wrap.show { display: block; }
+  .upload-progress-bar { height: 100%; background: var(--black); width: 0%; transition: width 0.3s; }
   .upload-status { font-size: 12px; color: var(--gray-600); text-align: center; margin-bottom: 8px; display: none; }
   .upload-status.show { display: block; }
 
   .badge-options { display: flex; gap: 8px; flex-wrap: wrap; }
   .badge-opt { border: 1px solid var(--gray-200); padding: 6px 14px; font-size: 12px; cursor: pointer; transition: all 0.15s; letter-spacing: 0.06em; text-transform: uppercase; background: var(--white); font-family: var(--font-body); }
-  .badge-opt:hover { border-color: var(--black); }
   .badge-opt.selected { background: var(--black); color: var(--white); border-color: var(--black); }
 
-  .add-btn { width: 100%; background: var(--black); color: var(--white); border: none; padding: 13px; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: var(--font-body); margin-top: 8px; transition: background 0.2s; }
-  .add-btn:hover { background: var(--gray-600); }
+  .add-btn { width: 100%; background: var(--black); color: var(--white); border: none; padding: 13px; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: var(--font-body); margin-top: 8px; }
   .add-btn:disabled { background: var(--gray-400); cursor: not-allowed; }
-
   .success-banner { display: none; background: #f0faf4; border: 1px solid #a8d5b5; padding: 12px 16px; font-size: 13px; color: #1a6b35; margin-top: 12px; text-align: center; }
   .success-banner.show { display: block; }
 
@@ -83,39 +80,34 @@
   .products-card h2 { font-family: var(--font-display); font-size: 24px; font-weight: 400; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--gray-200); display: flex; align-items: baseline; justify-content: space-between; }
   .products-card h2 span { font-size: 13px; font-family: var(--font-body); color: var(--gray-400); font-weight: 400; }
 
-  .product-item { display: grid; grid-template-columns: 60px 1fr auto; gap: 16px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--gray-200); }
+  .product-item { display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--gray-200); }
   .product-item:last-child { border-bottom: none; }
-  .product-thumb { width: 60px; height: 76px; background: var(--gray-100); overflow: hidden; flex-shrink: 0; }
+  .product-thumbs-row { display: flex; gap: 4px; }
+  .product-thumb { width: 52px; height: 66px; background: var(--gray-100); overflow: hidden; flex-shrink: 0; }
   .product-thumb img { width: 100%; height: 100%; object-fit: cover; }
-  .product-thumb-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--gray-400); text-align: center; }
+  .product-thumb-more { width: 52px; height: 66px; background: var(--gray-200); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--gray-600); flex-shrink: 0; }
+  .product-thumb-placeholder { width: 52px; height: 66px; background: var(--gray-100); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--gray-400); }
   .product-meta strong { font-size: 14px; font-weight: 500; display: block; margin-bottom: 3px; }
   .product-meta .meta-price { font-size: 13px; color: var(--gray-600); }
   .product-meta .meta-details { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
-  .product-badge-pill { font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; background: var(--black); color: var(--white); padding: 2px 7px; display: inline-block; margin-left: 8px; vertical-align: middle; }
-  .delete-btn { border: 1px solid var(--gray-200); background: var(--white); padding: 6px 12px; font-size: 12px; cursor: pointer; color: var(--gray-600); font-family: var(--font-body); transition: all 0.15s; white-space: nowrap; }
+  .product-badge-pill { font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; background: var(--black); color: var(--white); padding: 2px 7px; display: inline-block; margin-left: 8px; }
+  .delete-btn { border: 1px solid var(--gray-200); background: var(--white); padding: 6px 12px; font-size: 12px; cursor: pointer; color: var(--gray-600); font-family: var(--font-body); transition: all 0.15s; }
   .delete-btn:hover { background: #fdf0f0; border-color: #e74c3c; color: #e74c3c; }
 
-  .status-bar { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray-400); }
-  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #ccc; }
-  .status-dot.green { background: #2ecc71; }
-  .status-dot.red { background: #e74c3c; }
-
-  .loading-state { text-align: center; padding: 48px 0; color: var(--gray-400); }
-  .empty-state { text-align: center; padding: 48px 0; color: var(--gray-400); }
-  .empty-state p { margin-top: 6px; font-size: 12px; }
+  .loading-state, .empty-state { text-align: center; padding: 48px 0; color: var(--gray-400); }
 
   @media (max-width: 768px) {
     .admin-body { grid-template-columns: 1fr; padding: 24px 20px; }
     header { padding: 0 20px; }
     .form-card { position: static; }
     .form-row { grid-template-columns: 1fr; }
+    .photos-grid { grid-template-columns: repeat(3, 1fr); }
   }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- LOGIN -->
 <div class="login-screen" id="loginScreen">
   <div class="login-box">
     <h1>BLANC</h1>
@@ -127,53 +119,39 @@
   </div>
 </div>
 
-<!-- ADMIN -->
 <div class="admin-screen" id="adminScreen">
   <header>
     <div class="header-logo">BLANC — Admin</div>
     <div class="header-right">
-      <div class="status-bar">
-        <div class="status-dot" id="statusDot"></div>
-        <span id="statusText">Connexion...</span>
-      </div>
+      <div class="status-bar"><div class="status-dot" id="statusDot"></div><span id="statusText">Connexion...</span></div>
       <a href="index.html" target="_blank">Voir le site →</a>
       <button class="logout-btn" onclick="logout()">Déconnexion</button>
     </div>
   </header>
 
   <div class="admin-body">
-
-    <!-- FORMULAIRE -->
     <div class="form-card">
       <h2>Ajouter un produit</h2>
 
+      <!-- PHOTOS MULTIPLES -->
       <div class="form-group">
-        <label>Photo du produit</label>
-        <div class="img-upload-area" id="uploadArea">
-          <input type="file" id="photoFile" accept="image/*" onchange="handlePhotoSelect(this)">
-          <img id="photoPreview" src="" alt="">
-          <div class="upload-text" id="uploadText">
-            <span class="icon">📷</span>
-            <p>Cliquez pour choisir une photo</p>
-            <small>JPG, PNG · max 5MB</small>
-          </div>
+        <span class="photos-label">Photos du produit (max 6)</span>
+        <div class="photos-hint">La 1ère photo sera l'image principale</div>
+        <div class="photos-grid" id="photosGrid">
+          <!-- Slots générés dynamiquement -->
         </div>
-        <div class="upload-bar-wrap" id="uploadBarWrap">
-          <div class="upload-bar" id="uploadBar"></div>
-        </div>
-        <div class="upload-status" id="uploadStatus">Upload en cours...</div>
+        <div class="upload-progress-wrap" id="progressWrap"><div class="upload-progress-bar" id="progressBar"></div></div>
+        <div class="upload-status" id="uploadStatus">Envoi des photos...</div>
       </div>
 
       <div class="form-group">
         <label>Nom du produit *</label>
         <input type="text" id="prodName" placeholder="Ex : Robe Été Fleurie">
       </div>
-
       <div class="form-group">
         <label>Description courte *</label>
         <textarea id="prodDesc" placeholder="Ex : 100% coton, coupe fluide"></textarea>
       </div>
-
       <div class="form-row">
         <div class="form-group">
           <label>Prix (DA) *</label>
@@ -184,7 +162,6 @@
           <input type="number" id="prodOldPrice" placeholder="Optionnel">
         </div>
       </div>
-
       <div class="form-group">
         <label>Catégorie *</label>
         <select id="prodCategory">
@@ -193,26 +170,23 @@
           <option value="accessoires">Accessoires</option>
         </select>
       </div>
-
       <div class="form-group">
         <label>Tailles disponibles</label>
         <input type="text" id="prodSizes" placeholder="XS, S, M, L, XL">
         <div class="form-hint">Séparez par des virgules</div>
       </div>
-
       <div class="form-group">
         <label>Couleurs disponibles</label>
         <input type="text" id="prodColors" placeholder="Blanc, Noir, Beige">
         <div class="form-hint">Séparez par des virgules</div>
       </div>
-
       <div class="form-group">
         <label>Badge</label>
         <div class="badge-options">
-          <button class="badge-opt selected" onclick="selectBadge(this, null)">Aucun</button>
-          <button class="badge-opt" onclick="selectBadge(this, 'Nouveau')">Nouveau</button>
-          <button class="badge-opt" onclick="selectBadge(this, 'Soldes')">Soldes</button>
-          <button class="badge-opt" onclick="selectBadge(this, 'Exclusif')">Exclusif</button>
+          <button class="badge-opt selected" onclick="selectBadge(this,null)">Aucun</button>
+          <button class="badge-opt" onclick="selectBadge(this,'Nouveau')">Nouveau</button>
+          <button class="badge-opt" onclick="selectBadge(this,'Soldes')">Soldes</button>
+          <button class="badge-opt" onclick="selectBadge(this,'Exclusif')">Exclusif</button>
         </div>
       </div>
 
@@ -220,23 +194,21 @@
       <div class="success-banner" id="successBanner">✓ Produit ajouté — visible sur le site instantanément !</div>
     </div>
 
-    <!-- LISTE -->
     <div class="products-card">
       <h2>Produits <span id="productCountLabel">...</span></h2>
       <div id="productList"><div class="loading-state">Chargement...</div></div>
     </div>
-
   </div>
 </div>
 
-<!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const CLOUDINARY_CLOUD = "djikeohkg";
+const CLOUDINARY_CLOUD  = "djikeohkg";
 const CLOUDINARY_PRESET = "ml_default";
-const ADMIN_PASSWORD = "blanc2026";
+const ADMIN_PASSWORD    = "blanc2026";
+const MAX_PHOTOS        = 6;
 
 const firebaseConfig = {
   apiKey: "AIzaSyAtCzEBCCtTVNQxBiSZTAesFa4EEbxER6k",
@@ -248,110 +220,94 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db  = getFirestore(app);
 
 let selectedBadge = null;
-let selectedPhotoFile = null;
-let uploadedImageUrl = null;
+// photoSlots[i] = { file, previewUrl } ou null
+let photoSlots = Array(MAX_PHOTOS).fill(null);
 
 // ── LOGIN ──
 window.login = function() {
-  const val = document.getElementById('passwordInput').value;
-  if (val === ADMIN_PASSWORD) {
+  if (document.getElementById('passwordInput').value === ADMIN_PASSWORD) {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('adminScreen').style.display = 'block';
-    startFirestoreListener();
+    buildPhotoSlots();
+    startListener();
   } else {
     document.getElementById('loginError').style.display = 'block';
     document.getElementById('passwordInput').value = '';
   }
 };
-
 window.logout = function() {
   document.getElementById('loginScreen').style.display = 'flex';
   document.getElementById('adminScreen').style.display = 'none';
-  document.getElementById('passwordInput').value = '';
 };
 
-// ── FIRESTORE REALTIME ──
-function startFirestoreListener() {
-  const dot = document.getElementById('statusDot');
-  const txt = document.getElementById('statusText');
-  try {
-    const q = query(collection(db, "produits"), orderBy("createdAt", "desc"));
-    onSnapshot(q, (snap) => {
-      dot.className = 'status-dot green';
-      txt.textContent = 'Connecté';
-      renderProductList(snap.docs.map(d => ({ id: d.id, ...d.data() })));
-    }, () => {
-      dot.className = 'status-dot red';
-      txt.textContent = 'Erreur connexion';
-    });
-  } catch(e) { console.error(e); }
+// ── PHOTO SLOTS ──
+function buildPhotoSlots() {
+  const grid = document.getElementById('photosGrid');
+  grid.innerHTML = '';
+  for (let i = 0; i < MAX_PHOTOS; i++) {
+    const slot = document.createElement('div');
+    slot.className = 'photo-slot';
+    slot.id = `slot-${i}`;
+    slot.innerHTML = `
+      <input type="file" accept="image/*" onchange="handleSlotPhoto(${i}, this)">
+      <img id="slotImg-${i}" src="" alt="">
+      <button class="remove-photo" onclick="removeSlotPhoto(${i}, event)">×</button>
+      <span class="slot-text">📷</span>
+      <span class="slot-label">${i === 0 ? 'Principale' : `Photo ${i+1}`}</span>
+    `;
+    grid.appendChild(slot);
+  }
 }
 
-// ── PHOTO SELECTION ──
-window.handlePhotoSelect = function(input) {
+window.handleSlotPhoto = function(i, input) {
   const file = input.files[0];
   if (!file) return;
-  if (file.size > 5 * 1024 * 1024) { alert('Photo trop lourde (max 5MB).'); return; }
-  selectedPhotoFile = file;
-  uploadedImageUrl = null;
-
+  if (file.size > 5 * 1024 * 1024) { alert('Photo trop lourde (max 5MB)'); return; }
+  photoSlots[i] = { file };
   const reader = new FileReader();
   reader.onload = e => {
-    document.getElementById('photoPreview').src = e.target.result;
-    document.getElementById('photoPreview').style.display = 'block';
-    document.getElementById('uploadText').style.display = 'none';
+    document.getElementById(`slotImg-${i}`).src = e.target.result;
+    document.getElementById(`slotImg-${i}`).style.display = 'block';
+    document.getElementById(`slot-${i}`).classList.add('has-image');
   };
   reader.readAsDataURL(file);
 };
 
+window.removeSlotPhoto = function(i, e) {
+  e.stopPropagation();
+  photoSlots[i] = null;
+  const img = document.getElementById(`slotImg-${i}`);
+  img.src = ''; img.style.display = 'none';
+  document.getElementById(`slot-${i}`).classList.remove('has-image');
+  document.getElementById(`slot-${i}`).querySelector('input').value = '';
+};
+
 // ── CLOUDINARY UPLOAD ──
-async function uploadToCloudinary(file) {
-  const barWrap = document.getElementById('uploadBarWrap');
-  const bar = document.getElementById('uploadBar');
+async function uploadFile(file, index, total) {
+  const bar = document.getElementById('progressBar');
   const status = document.getElementById('uploadStatus');
-
-  barWrap.classList.add('show');
-  status.classList.add('show');
-  status.textContent = 'Envoi de la photo...';
-
-  const formData = new FormData();
-  formData.append('file', file);
-  formData.append('upload_preset', CLOUDINARY_PRESET);
-
   return new Promise((resolve, reject) => {
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('upload_preset', CLOUDINARY_PRESET);
     const xhr = new XMLHttpRequest();
     xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`);
-
-    xhr.upload.onprogress = (e) => {
+    xhr.upload.onprogress = e => {
       if (e.lengthComputable) {
-        const pct = Math.round((e.loaded / e.total) * 100);
+        const pct = Math.round(((index + e.loaded/e.total) / total) * 100);
         bar.style.width = pct + '%';
-        status.textContent = `Envoi... ${pct}%`;
+        status.textContent = `Envoi photo ${index+1}/${total}... ${Math.round(e.loaded/e.total*100)}%`;
       }
     };
-
     xhr.onload = () => {
-      barWrap.classList.remove('show');
-      status.classList.remove('show');
-      bar.style.width = '0%';
-      if (xhr.status === 200) {
-        const res = JSON.parse(xhr.responseText);
-        resolve(res.secure_url);
-      } else {
-        reject(new Error('Échec upload image'));
-      }
+      if (xhr.status === 200) resolve(JSON.parse(xhr.responseText).secure_url);
+      else reject(new Error('Échec upload'));
     };
-
-    xhr.onerror = () => {
-      barWrap.classList.remove('show');
-      status.classList.remove('show');
-      reject(new Error('Erreur réseau'));
-    };
-
-    xhr.send(formData);
+    xhr.onerror = () => reject(new Error('Erreur réseau'));
+    xhr.send(fd);
   });
 }
 
@@ -371,21 +327,25 @@ window.addProduct = async function() {
   const category = document.getElementById('prodCategory').value;
   const sizesRaw = document.getElementById('prodSizes').value.trim();
   const colorsRaw= document.getElementById('prodColors').value.trim();
+  if (!name || !desc || !price) { alert('Veuillez remplir le nom, la description et le prix.'); return; }
 
-  if (!name || !desc || !price) {
-    alert('Veuillez remplir le nom, la description et le prix.');
-    return;
-  }
+  const filesToUpload = photoSlots.map((s, i) => s ? { file: s.file, index: i } : null).filter(Boolean);
 
   const btn = document.getElementById('addBtn');
-  btn.disabled = true;
-  btn.textContent = 'Enregistrement...';
+  btn.disabled = true; btn.textContent = 'Enregistrement...';
 
   try {
-    let imageUrl = null;
-
-    if (selectedPhotoFile) {
-      imageUrl = await uploadToCloudinary(selectedPhotoFile);
+    let uploadedUrls = [];
+    if (filesToUpload.length > 0) {
+      document.getElementById('progressWrap').classList.add('show');
+      document.getElementById('uploadStatus').classList.add('show');
+      document.getElementById('progressBar').style.width = '0%';
+      for (let i = 0; i < filesToUpload.length; i++) {
+        const url = await uploadFile(filesToUpload[i].file, i, filesToUpload.length);
+        uploadedUrls.push(url);
+      }
+      document.getElementById('progressWrap').classList.remove('show');
+      document.getElementById('uploadStatus').classList.remove('show');
     }
 
     const sizes  = sizesRaw  ? sizesRaw.split(',').map(s => s.trim()).filter(Boolean)  : ['Unique'];
@@ -393,24 +353,19 @@ window.addProduct = async function() {
 
     await addDoc(collection(db, "produits"), {
       name, desc, price, oldPrice, category,
-      badge: selectedBadge,
-      sizes, colors,
-      image: imageUrl,
+      badge: selectedBadge, sizes, colors,
+      image:  uploadedUrls[0] || null,
+      images: uploadedUrls.slice(1),
       createdAt: serverTimestamp()
     });
 
     // Reset
-    ['prodName','prodDesc','prodPrice','prodOldPrice','prodSizes','prodColors'].forEach(id => {
-      document.getElementById(id).value = '';
-    });
-    document.getElementById('photoPreview').style.display = 'none';
-    document.getElementById('uploadText').style.display = 'block';
-    document.getElementById('photoFile').value = '';
+    ['prodName','prodDesc','prodPrice','prodOldPrice','prodSizes','prodColors'].forEach(id => document.getElementById(id).value = '');
+    photoSlots = Array(MAX_PHOTOS).fill(null);
+    buildPhotoSlots();
     document.querySelectorAll('.badge-opt').forEach(b => b.classList.remove('selected'));
     document.querySelector('.badge-opt').classList.add('selected');
     selectedBadge = null;
-    selectedPhotoFile = null;
-    uploadedImageUrl = null;
 
     const banner = document.getElementById('successBanner');
     banner.classList.add('show');
@@ -419,57 +374,53 @@ window.addProduct = async function() {
   } catch(err) {
     alert('Erreur : ' + err.message);
   } finally {
-    btn.disabled = false;
-    btn.textContent = 'Ajouter le produit';
+    btn.disabled = false; btn.textContent = 'Ajouter le produit';
   }
 };
 
 // ── SUPPRIMER ──
 window.deleteProduct = async function(id) {
   if (!confirm('Supprimer ce produit définitivement ?')) return;
-  try {
-    await deleteDoc(doc(db, "produits", id));
-  } catch(err) {
-    alert('Erreur suppression : ' + err.message);
-  }
+  try { await deleteDoc(doc(db, "produits", id)); }
+  catch(err) { alert('Erreur : ' + err.message); }
 };
 
-// ── LISTE ──
-function renderProductList(products) {
-  const list = document.getElementById('productList');
+// ── FIRESTORE ──
+function startListener() {
+  const dot = document.getElementById('statusDot');
+  const txt = document.getElementById('statusText');
+  const q = query(collection(db, "produits"), orderBy("createdAt", "desc"));
+  onSnapshot(q, snap => {
+    dot.className = 'status-dot green'; txt.textContent = 'Connecté';
+    renderList(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+  }, () => { txt.textContent = 'Erreur'; });
+}
+
+function renderList(products) {
+  const list  = document.getElementById('productList');
   const label = document.getElementById('productCountLabel');
   label.textContent = products.length + (products.length > 1 ? ' produits' : ' produit');
-
   if (products.length === 0) {
-    list.innerHTML = `<div class="empty-state">Aucun produit pour l'instant<p>Ajoutez votre premier produit via le formulaire</p></div>`;
+    list.innerHTML = `<div class="empty-state">Aucun produit — ajoutez-en un via le formulaire</div>`;
     return;
   }
-
-  list.innerHTML = products.map(p => `
+  list.innerHTML = products.map(p => {
+    const imgs = [p.image, ...(p.images||[])].filter(Boolean);
+    const thumbsHTML = imgs.length === 0
+      ? `<div class="product-thumb-placeholder">Pas de photo</div>`
+      : imgs.slice(0,3).map(url => `<div class="product-thumb"><img src="${url}" alt=""></div>`).join('') +
+        (imgs.length > 3 ? `<div class="product-thumb-more">+${imgs.length-3}</div>` : '');
+    return `
     <div class="product-item">
-      <div class="product-thumb">
-        ${p.image
-          ? `<img src="${p.image}" alt="${p.name}">`
-          : `<div class="product-thumb-placeholder">Pas de photo</div>`}
-      </div>
+      <div class="product-thumbs-row">${thumbsHTML}</div>
       <div class="product-meta">
-        <strong>
-          ${p.name}
-          ${p.badge ? `<span class="product-badge-pill">${p.badge}</span>` : ''}
-        </strong>
-        <div class="meta-price">
-          ${p.price.toLocaleString('fr-DZ')} DA
-          ${p.oldPrice ? ` · <s>${p.oldPrice.toLocaleString('fr-DZ')} DA</s>` : ''}
-          · ${p.category}
-        </div>
-        <div class="meta-details">
-          ${p.sizes.join(', ')}
-          ${p.colors && p.colors.length ? ' · ' + p.colors.join(', ') : ''}
-        </div>
+        <strong>${p.name}${p.badge?`<span class="product-badge-pill">${p.badge}</span>`:''}</strong>
+        <div class="meta-price">${p.price.toLocaleString('fr-DZ')} DA${p.oldPrice?` · <s>${p.oldPrice.toLocaleString('fr-DZ')} DA</s>`:''} · ${p.category}</div>
+        <div class="meta-details">${p.sizes.join(', ')}${p.colors&&p.colors.length?' · '+p.colors.join(', '):''} · ${imgs.length} photo${imgs.length>1?'s':''}</div>
       </div>
       <button class="delete-btn" onclick="deleteProduct('${p.id}')">Supprimer</button>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 </script>
 </body>
