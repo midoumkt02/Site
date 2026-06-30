@@ -17,7 +17,7 @@
 
   /* NAV */
   nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 64px; }
-  .nav-logo { font-family: var(--font-display); font-size: 26px; font-weight: 600; letter-spacing: 0.15em; }
+  .nav-logo { font-family: var(--font-display); font-size: 26px; font-weight: 600; letter-spacing: 0.15em;margin: 0 auto; }
   .nav-links { display: flex; gap: 32px; }
   .nav-links a { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-600); transition: color 0.2s; cursor: pointer; }
   .nav-links a:hover, .nav-links a.active { color: var(--black); }
@@ -73,7 +73,7 @@
   .detail-content h3 { font-family: var(--font-display); font-size: 36px; font-weight: 400; margin-bottom: 8px; }
   .price-block { margin: 16px 0 24px; }
   .price-main { color: var(--black-400); font-size: 16px; font-weight: 700; }
-  .price-old { font-size: 15px; color: var(--gray-400); text-decoration: line-through; margin-right: 10px; }
+  .price-old { font-size: 16px; color: var(--gray-400); text-decoration: line-through; margin-right: 10px; }
   .detail-desc { color: var(--gray-600); margin-bottom: 28px; line-height: 1.8; }
 
   /* FORM */
@@ -131,17 +131,7 @@
 <body>
 
 <nav>
-  <div class="nav-logo">BLANC</div>
-  <div class="nav-links">
-    <a class="active" onclick="showSection('all',event)">Tout</a>
-    <a onclick="showSection('femme',event)">Femme</a>
-    <a onclick="showSection('homme',event)">Homme</a>
-    <a onclick="showSection('accessoires',event)">Accessoires</a>
-  </div>
-  <div class="nav-cart">
-    <span>Panier</span>
-    <span class="cart-count" id="cartCount">0</span>
-  </div>
+  <div class="nav-logo" >BLANC</div>
 </nav>
 
 <!-- HERO -->
@@ -404,7 +394,6 @@ window.submitOrder = async function(id) {
   try {
     await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) });
     cartTotal++;
-    document.getElementById('cartCount').textContent = cartTotal;
     document.getElementById('success-'+id).classList.add('show');
     btn.textContent = 'Commande envoyée ✓';
   } catch(err) {
