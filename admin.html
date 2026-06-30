@@ -19,16 +19,20 @@
   .login-box h1 { font-family: var(--font-display); font-size: 32px; font-weight: 400; margin-bottom: 8px; }
   .login-box p { font-size: 13px; color: var(--gray-600); margin-bottom: 32px; }
   .login-box label { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-600); display: block; margin-bottom: 6px; }
-  .login-box input { width: 100%; border: 1px solid var(--gray-200); padding: 11px 14px; font-size: 14px; font-family: var(--font-body); outline: none; transition: border-color 0.2s; margin-bottom: 20px; }
+  .login-box input { width: 100%; border: 1px solid var(--gray-200); padding: 11px 14px; font-size: 14px; font-family: var(--font-body); outline: none; transition: border-color 0.2s; margin-bottom: 18px; }
   .login-box input:focus { border-color: var(--black); }
-  .login-btn { width: 100%; background: var(--black); color: var(--white); border: none; padding: 13px; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: var(--font-body); }
+  .login-btn { width: 100%; background: var(--black); color: var(--white); border: none; padding: 13px; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: var(--font-body); transition: background 0.2s; }
+  .login-btn:hover { background: var(--gray-600); }
+  .login-btn:disabled { background: var(--gray-400); cursor: not-allowed; }
   .login-error { font-size: 13px; color: #c0392b; margin-top: 12px; display: none; }
+  .login-loading { font-size: 13px; color: var(--gray-400); margin-top: 12px; display: none; text-align: center; }
 
   .admin-screen { display: none; }
   header { background: var(--white); border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 64px; position: sticky; top: 0; z-index: 10; }
   .header-logo { font-family: var(--font-display); font-size: 22px; font-weight: 600; letter-spacing: 0.15em; }
   .header-right { display: flex; align-items: center; gap: 20px; }
   .header-right a { font-size: 13px; color: var(--gray-600); text-decoration: none; }
+  .header-email { font-size: 12px; color: var(--gray-400); }
   .logout-btn { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--gray-200); background: var(--white); padding: 7px 16px; cursor: pointer; font-family: var(--font-body); transition: all 0.2s; }
   .logout-btn:hover { background: var(--black); color: var(--white); border-color: var(--black); }
   .status-bar { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray-400); }
@@ -47,7 +51,6 @@
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .form-hint { font-size: 12px; color: var(--gray-400); margin-top: 5px; }
 
-  /* MULTI PHOTO UPLOAD */
   .photos-label { font-size: 12px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--gray-600); display: block; margin-bottom: 8px; }
   .photos-hint { font-size: 12px; color: var(--gray-400); margin-bottom: 10px; }
   .photos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; }
@@ -98,32 +101,38 @@
 
   @media (max-width: 768px) {
     .admin-body { grid-template-columns: 1fr; padding: 24px 20px; }
-    header { padding: 0 20px; }
+    header { padding: 0 20px; flex-wrap: wrap; height: auto; padding-top: 12px; padding-bottom: 12px; gap: 10px; }
+    .header-right { flex-wrap: wrap; gap: 12px; }
     .form-card { position: static; }
     .form-row { grid-template-columns: 1fr; }
-    .photos-grid { grid-template-columns: repeat(3, 1fr); }
   }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
+<!-- LOGIN -->
 <div class="login-screen" id="loginScreen">
   <div class="login-box">
     <h1>BLANC</h1>
     <p>Espace administration</p>
+    <label>Adresse e-mail</label>
+    <input type="email" id="emailInput" placeholder="admin@exemple.com" autocomplete="username">
     <label>Mot de passe</label>
-    <input type="password" id="passwordInput" placeholder="••••••••" onkeydown="if(event.key==='Enter') login()">
-    <button class="login-btn" onclick="login()">Accéder</button>
-    <div class="login-error" id="loginError">Mot de passe incorrect.</div>
+    <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter') login()">
+    <button class="login-btn" id="loginBtn" onclick="login()">Se connecter</button>
+    <div class="login-loading" id="loginLoading">Connexion en cours...</div>
+    <div class="login-error" id="loginError">Email ou mot de passe incorrect.</div>
   </div>
 </div>
 
+<!-- ADMIN -->
 <div class="admin-screen" id="adminScreen">
   <header>
     <div class="header-logo">BLANC — Admin</div>
     <div class="header-right">
       <div class="status-bar"><div class="status-dot" id="statusDot"></div><span id="statusText">Connexion...</span></div>
+      <span class="header-email" id="headerEmail"></span>
       <a href="index.html" target="_blank">Voir le site →</a>
       <button class="logout-btn" onclick="logout()">Déconnexion</button>
     </div>
@@ -133,13 +142,10 @@
     <div class="form-card">
       <h2>Ajouter un produit</h2>
 
-      <!-- PHOTOS MULTIPLES -->
       <div class="form-group">
         <span class="photos-label">Photos du produit (max 6)</span>
         <div class="photos-hint">La 1ère photo sera l'image principale</div>
-        <div class="photos-grid" id="photosGrid">
-          <!-- Slots générés dynamiquement -->
-        </div>
+        <div class="photos-grid" id="photosGrid"></div>
         <div class="upload-progress-wrap" id="progressWrap"><div class="upload-progress-bar" id="progressBar"></div></div>
         <div class="upload-status" id="uploadStatus">Envoi des photos...</div>
       </div>
@@ -203,11 +209,15 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {
+  getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {
+  getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const CLOUDINARY_CLOUD  = "djikeohkg";
 const CLOUDINARY_PRESET = "ml_default";
-const ADMIN_PASSWORD    = "blanc2026";
 const MAX_PHOTOS        = 6;
 
 const firebaseConfig = {
@@ -219,28 +229,63 @@ const firebaseConfig = {
   appId: "1:279528112650:web:ff800b44f63adb72c195f3"
 };
 
-const app = initializeApp(firebaseConfig);
-const db  = getFirestore(app);
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
 
 let selectedBadge = null;
-// photoSlots[i] = { file, previewUrl } ou null
 let photoSlots = Array(MAX_PHOTOS).fill(null);
+let unsubscribeProducts = null;
 
-// ── LOGIN ──
-window.login = function() {
-  if (document.getElementById('passwordInput').value === ADMIN_PASSWORD) {
+// ── AUTH STATE ──
+onAuthStateChanged(auth, (user) => {
+  if (user) {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('adminScreen').style.display = 'block';
+    document.getElementById('headerEmail').textContent = user.email;
     buildPhotoSlots();
     startListener();
   } else {
-    document.getElementById('loginError').style.display = 'block';
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('adminScreen').style.display = 'none';
+    if (unsubscribeProducts) { unsubscribeProducts(); unsubscribeProducts = null; }
+  }
+});
+
+// ── LOGIN ──
+window.login = async function() {
+  const email = document.getElementById('emailInput').value.trim();
+  const password = document.getElementById('passwordInput').value;
+  const btn = document.getElementById('loginBtn');
+  const loading = document.getElementById('loginLoading');
+  const error = document.getElementById('loginError');
+
+  error.style.display = 'none';
+  if (!email || !password) {
+    error.textContent = 'Veuillez remplir l\'email et le mot de passe.';
+    error.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  loading.style.display = 'block';
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (err) {
+    error.textContent = 'Email ou mot de passe incorrect.';
+    error.style.display = 'block';
     document.getElementById('passwordInput').value = '';
+  } finally {
+    btn.disabled = false;
+    loading.style.display = 'none';
   }
 };
-window.logout = function() {
-  document.getElementById('loginScreen').style.display = 'flex';
-  document.getElementById('adminScreen').style.display = 'none';
+
+window.logout = async function() {
+  await signOut(auth);
+  document.getElementById('emailInput').value = '';
+  document.getElementById('passwordInput').value = '';
 };
 
 // ── PHOTO SLOTS ──
@@ -320,6 +365,8 @@ window.selectBadge = function(btn, value) {
 
 // ── AJOUTER PRODUIT ──
 window.addProduct = async function() {
+  if (!auth.currentUser) { alert('Session expirée, reconnectez-vous.'); return; }
+
   const name     = document.getElementById('prodName').value.trim();
   const desc     = document.getElementById('prodDesc').value.trim();
   const price    = parseInt(document.getElementById('prodPrice').value);
@@ -356,10 +403,10 @@ window.addProduct = async function() {
       badge: selectedBadge, sizes, colors,
       image:  uploadedUrls[0] || null,
       images: uploadedUrls.slice(1),
-      createdAt: serverTimestamp()
+      createdAt: serverTimestamp(),
+      createdBy: auth.currentUser.email
     });
 
-    // Reset
     ['prodName','prodDesc','prodPrice','prodOldPrice','prodSizes','prodColors'].forEach(id => document.getElementById(id).value = '');
     photoSlots = Array(MAX_PHOTOS).fill(null);
     buildPhotoSlots();
@@ -385,12 +432,12 @@ window.deleteProduct = async function(id) {
   catch(err) { alert('Erreur : ' + err.message); }
 };
 
-// ── FIRESTORE ──
+// ── FIRESTORE LISTENER ──
 function startListener() {
   const dot = document.getElementById('statusDot');
   const txt = document.getElementById('statusText');
   const q = query(collection(db, "produits"), orderBy("createdAt", "desc"));
-  onSnapshot(q, snap => {
+  unsubscribeProducts = onSnapshot(q, snap => {
     dot.className = 'status-dot green'; txt.textContent = 'Connecté';
     renderList(snap.docs.map(d => ({ id: d.id, ...d.data() })));
   }, () => { txt.textContent = 'Erreur'; });
