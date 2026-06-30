@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(git init)",
+      "PowerShell(git remote add origin https://github.com/midoumkt02/Site.git)",
+      "PowerShell(git fetch origin)",
+      "PowerShell(git checkout -b main --track origin/main)",
+      "PowerShell(git checkout -f -b main origin/main)",
+      "PowerShell(git add admin.html)",
+      "PowerShell(git commit -m \"Add admin.html\")",
+      "PowerShell(git push origin main)"
+    ]
+  }
+}
